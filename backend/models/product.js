@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const productSchema = mongoose.Schema({
+const productSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Product name is required"],
@@ -16,8 +16,6 @@ const productSchema = mongoose.Schema({
   description: {
     type: String,
     required: [true, "Product description is required"],
-    trim: true,
-    maxlength: [500, "Product description cannot exceed 500 characters"],
   },
   ratings: {
     type: Number,
@@ -72,11 +70,6 @@ const productSchema = mongoose.Schema({
   },
   reviews: [
     {
-      user: {
-        type: mongoose.Schema.ObjectId,
-        ref: "User",
-        required: true,
-      },
       name: {
         type: String,
         required: true,
@@ -91,11 +84,6 @@ const productSchema = mongoose.Schema({
       },
     },
   ],
-  user: {
-    type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: true,
-  },
     createdAt: {
     type: Date,
     default: Date.now,

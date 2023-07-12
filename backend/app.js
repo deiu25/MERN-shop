@@ -11,5 +11,5 @@ app.use('/api/v1', products);
 module.exports = app;
 
 //node backend/server.js
-//node backend/server.js
+//npm run dev
 //npm run prod
