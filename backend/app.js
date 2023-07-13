@@ -16,3 +16,5 @@ module.exports = app;
 
 //mongod
 //mongosh
+
+//npm run seeder (to seed the database)
