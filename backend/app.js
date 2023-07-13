@@ -13,3 +13,6 @@ module.exports = app;
 //node backend/server.js
 //npm run dev
 //npm run prod
+
+//mongod
+//mongosh
