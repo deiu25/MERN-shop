@@ -6,7 +6,7 @@ const { registerUser, loginUser, logoutUser, forgotPassword, resetPassword, getU
 //const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
 router.route('/register').post(registerUser);
-// router.route('/login').post(loginUser);
+router.route('/login').post(loginUser);
 // router.route('/logout').get(logoutUser);
 
 // router.route('/password/forgot').post(forgotPassword);
