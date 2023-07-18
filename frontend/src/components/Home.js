@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/product.Actions";
 import { Product } from "./product/Product";
 import { Loader } from "./leyout/Loader";
+import { useAlert } from "react-alert";
 
 
 export const Home = () => {
+  const alert = useAlert();
   const dispatch = useDispatch();
 
   const {
@@ -20,8 +22,11 @@ export const Home = () => {
   } = useSelector((state) => state.products);
 
   useEffect(() => {
+    if (error) {
+      return alert.error(error);
+    }
     dispatch(getProducts());
-  }, [dispatch]);
+  }, [dispatch,alert, error]);
 
   return (
     <Fragment>
