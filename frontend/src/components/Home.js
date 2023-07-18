@@ -1,37 +1,46 @@
-import React, { Fragment, useEffect } from 'react'
-import { MetaData } from './leyout/MetaData'
+import React, { Fragment, useEffect } from "react";
+import { MetaData } from "./leyout/MetaData";
 
-import { useDispatch, useSelector } from 'react-redux'
-import { getProducts } from '../actions/product.Actions'
-import { Product } from './product/Product'
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../actions/product.Actions";
+import { Product } from "./product/Product";
+import { Loader } from "./leyout/Loader";
 
 
 export const Home = () => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-
-  const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector(state => state.products)
+  const {
+    loading,
+    products,
+    error,
+    productsCount,
+    resPerPage,
+    filteredProductsCount,
+  } = useSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(getProducts())
-  }, [dispatch])
+    dispatch(getProducts());
+  }, [dispatch]);
 
   return (
     <Fragment>
-      {loading ? <h1>Loading...</h1> : (
+      {loading ? (
+        <Loader />
+      ) : (
         <Fragment>
-<MetaData title={'Buy Best Products Online'} />
-        <h1 id='products_heading'>Latest Products</h1>
-        <section id="products" className="container mt-5">
-      <div className="row">
-        {products && products.map(product => (
-        <Product key={product._id} product={product} />
-        ))}
-      </div>
-    </section>
-        
-    </Fragment>
+          <MetaData title={"Buy Best Products Online"} />
+          <h1 id="products_heading">Latest Products</h1>
+          <section id="products" className="container mt-5">
+            <div className="row">
+              {products &&
+                products.map((product) => (
+                  <Product key={product._id} product={product} />
+                ))}
+            </div>
+          </section>
+        </Fragment>
       )}
     </Fragment>
-  )
-}
+  );
+};
