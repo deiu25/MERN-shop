@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { MetaData } from "./leyout/MetaData";
 import Pagination from "react-js-pagination";
-
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../actions/productActions";
 import { Product } from "./product/Product";
@@ -25,12 +25,14 @@ export const Home = () => {
     filteredProductsCount,
   } = useSelector((state) => state.products);
 
+  const { keyword } = useParams();
+
   useEffect(() => {
     if (error) {
       return alert.error(error);
     }
-    dispatch(getProducts(currentPage));
-  }, [dispatch,alert, error, currentPage]);
+    dispatch(getProducts(keyword, currentPage));
+  }, [dispatch,alert, error, keyword, currentPage]);
 
   function setCurrentPageNo(pageNumber) {
     setCurrentPage(pageNumber);
