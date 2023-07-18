@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { MetaData } from "./leyout/MetaData";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../actions/product.Actions";
+import { getProducts } from "../actions/productActions";
 import { Product } from "./product/Product";
 import { Loader } from "./leyout/Loader";
 import { useAlert } from "react-alert";
