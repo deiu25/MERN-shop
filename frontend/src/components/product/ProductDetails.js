@@ -36,6 +36,7 @@ export const ProductDetails = ({ match }) => {
         <Loader />
       ) : (
         <>
+    <MetaData title={product.name} />
           <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
               <Carousel pause="hover">
