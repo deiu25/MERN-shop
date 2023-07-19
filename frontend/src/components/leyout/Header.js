@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Search } from "./Search";
 import "../../App.css";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   return (
@@ -8,8 +9,10 @@ export const Header = () => {
       <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
+            <Link to="/">
             {/* <img src="./images/logo.png" /> */}
             <h1>Shop</h1>
+            </Link>
           </div>
         </div>
 
