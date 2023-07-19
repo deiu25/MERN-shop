@@ -1,15 +1,19 @@
+import { toast } from 'react-toastify';
+
 import { Carousel } from "react-bootstrap";
 import React, { useEffect } from "react";
 import { Loader } from "../leyout/Loader";
 import { MetaData } from "../leyout/MetaData";
-import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetails, clearErrors } from "../../actions/productActions";
 import { useParams } from 'react-router-dom';
 
 export const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
-  const alert = useAlert();
+  
+  const notifyError = (message) => {
+    toast.error(message);
+  };
 
   const { id } = useParams();
 
@@ -21,14 +25,14 @@ export const ProductDetails = ({ match }) => {
     dispatch(getProductDetails(id));
 
     if (error) {
-      alert.error(error);
+      notifyError(error);
       dispatch(clearErrors());
     }
 
     return () => {
       dispatch(clearErrors());
     };
-  }, [dispatch, alert, error, id]);
+  }, [dispatch, error, id]);
 
   return (
     <>
