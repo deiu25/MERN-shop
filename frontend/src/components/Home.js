@@ -39,9 +39,14 @@ export const Home = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, products, error, productsCount, resPerPage, filteredProductsCount } = useSelector(
-    (state) => state.products
-  );
+  const {
+    loading,
+    products,
+    error,
+    productsCount,
+    resPerPage,
+    filteredProductsCount,
+  } = useSelector((state) => state.products);
 
   const { keyword } = useParams();
 
@@ -116,27 +121,29 @@ export const Home = () => {
 
                       <hr className="my-5" />
 
-<div className="mt-3">
-  <h4 className="mb-3">Ratings</h4>
+                      <div className="mt-3">
+                        <h4 className="mb-3">Ratings</h4>
 
-  <ul className="pl-0">
-    {[5, 4, 3, 2, 1].map(star => (
-      <li
-        style={{
-          cursor: "pointer",
-          listStyleType: "none",
-        }}
-        key={star}
-        onClick={() => setRating(star)}
-      >
-        <div className="rating-outer">
-          <div className="rating-inner" style={{ width: `${star * 20}%` }}></div>
-        </div>
-      </li>
-    ))}
-  </ul>
-</div>
-
+                        <ul className="pl-0">
+                          {[5, 4, 3, 2, 1].map((star) => (
+                            <li
+                              style={{
+                                cursor: "pointer",
+                                listStyleType: "none",
+                              }}
+                              key={star}
+                              onClick={() => setRating(star)}
+                            >
+                              <div className="rating-outer">
+                                <div
+                                  className="rating-inner"
+                                  style={{ width: `${star * 20}%` }}
+                                ></div>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
 

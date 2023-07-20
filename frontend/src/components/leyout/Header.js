@@ -21,9 +21,9 @@ export const Header = () => {
         </div>
 
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-          <button className="btn" id="login_btn">
+          <Link to="/login" id="login_btn" className="btn btn-primary px-4 text-white">
             Login
-          </button>
+          </Link>
           <span id="cart" className="ml-3">
             Cart
           </span>

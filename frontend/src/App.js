@@ -4,6 +4,8 @@ import { Home } from "./components/Home";
 import { Footer } from "./components/leyout/Footer";
 import { Header } from "./components/leyout/Header";
 import { ProductDetails } from "./components/product/ProductDetails";
+import { Login } from "./components/user/Login";
+
 
 function App() {
   return (
@@ -15,6 +17,7 @@ function App() {
             <Route path="/" element={<Home />}/>
             <Route path="/search/:keyword" element={<Home />}/>
             <Route path="/product/:id" element={<ProductDetails />}/>
+            <Route path="/login" element={<Login />}/>
           </Routes>
         </div>
         <Footer />
