@@ -10,6 +10,7 @@ import { useEffect } from "react";
 
 import { loadUser } from "./actions/userActions";
 import store from "./store";
+import { Profile } from "./components/user/Profile";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register/>}/>
+            <Route path="/me" element={<Profile />} />
           </Routes>
         </div>
         <Footer />

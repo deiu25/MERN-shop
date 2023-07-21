@@ -78,17 +78,15 @@ body {
 
 nav {
   background-color: var(--color-nav);
-  padding: var(--padding-medium);
 }
 
 nav a {
   color: var(--color-white);
   text-decoration: none;
-  margin: 0 15px;
 }
 
 nav a:hover {
-  color: var(--color-lightgrey);
+  color: var(--color-orange);
 }
 
 /* Active link */
@@ -152,6 +150,7 @@ nav a.active {
 
 .card-title a {
   color: var(--color-darkgrey);
+  text-decoration: none;
 }
 
 .card-title a:hover {
@@ -664,6 +663,10 @@ ul.CTAs a {
   color: var(--color-grey);
 }
 
+.dropdown {
+  display: inline-block;
+  margin-left: 0.5rem;
+}
 .custom-dropdown {
   background: transparent !important;
   border: none !important;
