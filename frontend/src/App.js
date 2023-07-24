@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { loadUser } from "./actions/userActions";
 import store from "./store";
 import { Profile } from "./components/user/Profile";
+import { PrivateComponent } from "./components/route/ProtectedRoute";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
+  
   return (
     <Router>
       <div className="App">
@@ -29,7 +31,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />}/>
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register/>}/>
-            <Route path="/me" element={<Profile />} />
+            <Route path="/me" element={<PrivateComponent element={Profile} />} />
           </Routes>
         </div>
         <Footer />
@@ -39,3 +41,4 @@ function App() {
 }
 
 export default App;
+
