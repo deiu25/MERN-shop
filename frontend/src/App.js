@@ -13,7 +13,7 @@ import store from "./store";
 import { Profile } from "./components/user/Profile";
 import { PrivateComponent } from "./components/route/ProtectedRoute";
 import { UpdateProfile } from "./components/user/UpdateProfile";
-
+import { UpdatePassword } from "./components/user/UpdatePassword";
 
 function App() {
 
@@ -34,6 +34,7 @@ function App() {
             <Route path="/register" element={<Register/>}/>
             <Route path="/me" element={<PrivateComponent element={Profile} />} />
             <Route path="/me/update" element={<PrivateComponent element={UpdateProfile} />} />
+            <Route path="/password/update" element={<PrivateComponent element={UpdatePassword} />} />
           </Routes>
         </div>
         <Footer />
