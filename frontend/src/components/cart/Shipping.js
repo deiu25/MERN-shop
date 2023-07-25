@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
 import { countries } from 'countries-list';
-
+import { CheckoutSteps } from './CheckoutSteps';
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { saveShippingInfo } from '../../actions/cartActions';
@@ -31,6 +31,8 @@ export const Shipping = () => {
     return (
         <>
             <MetaData title={'Shipping Info'} />
+
+            <CheckoutSteps shipping confirmOrder />
 
             <div className="row wrapper">
                 <div className="col-10 col-lg-5">

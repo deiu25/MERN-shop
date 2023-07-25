@@ -6,9 +6,11 @@ import { Header } from "./components/leyout/Header";
 import { ProductDetails } from "./components/product/ProductDetails";
 import { Cart } from "./components/cart/Cart";
 import { Shipping } from "./components/cart/Shipping";
+import { ConfirmOrder } from "./components/cart/ConfirmOrder";
 import { Login } from "./components/user/Login";
 import { Register } from "./components/user/Register";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import { loadUser } from "./actions/userActions";
 import store from "./store";
@@ -21,8 +23,17 @@ import { NewPassword } from "./components/user/NewPassword";
 
 function App() {
 
+  const [stripeApiKey, setStripeApiKey] = useState('');
+
   useEffect(() => {
     store.dispatch(loadUser());
+
+    async function getStripApiKey() {
+      const { data } = await axios.get('/api/v1/stripeapi');
+      setStripeApiKey(data.stripeApiKey);
+    }
+
+    getStripApiKey();
   }, []);
   
   return (
@@ -36,6 +47,7 @@ function App() {
             <Route path="/product/:id" element={<ProductDetails />}/>
             <Route path="/cart/:id?" element={<Cart />}/>
             <Route path="/shipping" element={<PrivateComponent element={Shipping} />} />
+            <Route path="/order/confirm" element={<PrivateComponent element={ConfirmOrder} />} />
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/me" element={<PrivateComponent element={Profile} />} />
