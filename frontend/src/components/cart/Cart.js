@@ -1,13 +1,14 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
 
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeItemFromCart } from '../../actions/cartActions';
 
-export const Cart = ({ history }) => {
+export const Cart = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { cartItems } = useSelector(state => state.cart);
 
@@ -34,7 +35,7 @@ export const Cart = ({ history }) => {
     }
 
     const checkoutHandler = () => {
-        history.push('/login?redirect=shipping')
+        navigate('/login?redirect=shipping');
     }
 
     return (

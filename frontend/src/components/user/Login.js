@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 import { Loader } from "../leyout/Loader";
 import { MetaData } from "../leyout/MetaData";
@@ -16,6 +17,7 @@ export const Login = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const notifyError = (message) => {
         toast.error(message);
@@ -25,16 +27,23 @@ export const Login = () => {
         (state) => state.auth
     );
 
+    const redirect = location.search ? location.search.split("=")[1] : "/";
+
     useEffect(() => {
         if (isAuthenticated) {
-          navigate('/');
+            if (redirect === "shipping") {
+                navigate("/shipping");
+            } else {
+                navigate(redirect);
+            }
         }
-      
+    
         if (error) {
-          notifyError(error);
-          dispatch(clearErrors());
+            notifyError(error);
+            dispatch(clearErrors());
         }
-      }, [dispatch, error, isAuthenticated, navigate]);      
+    }, [dispatch, error, isAuthenticated, navigate, redirect]);  
+     
 
     const submitHandler = (e) => {
         e.preventDefault();
