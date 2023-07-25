@@ -1,20 +1,15 @@
 import { Link } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
-import { toast } from 'react-toastify';
 
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../actions/cartActions';
+import { addToCart, removeItemFromCart } from '../../actions/cartActions';
 
 export const Cart = ({ history }) => {
 
     const dispatch = useDispatch();
 
     const { cartItems } = useSelector(state => state.cart);
-
-    const notifyError = (message) => {
-        toast.error(message);
-    }
 
     const increaseQty = (id, quantity, stock) => {
         const newQty = quantity + 1;
@@ -32,6 +27,10 @@ export const Cart = ({ history }) => {
 
         dispatch(addToCart(id, newQty));
 
+    }
+
+    const removeCartItemHandler = (id) => {
+        dispatch(removeItemFromCart(id));
     }
 
     const checkoutHandler = () => {
@@ -79,7 +78,7 @@ export const Cart = ({ history }) => {
                                         </div>
 
                                         <div className="col-4 col-lg-1 mt-4 mt-lg-0">
-                                            <i id="delete_cart_item" className="bi bi-trash btn btn-danger"></i>
+                                            <i id="delete_cart_item" className="bi bi-trash btn btn-danger" onClick={() => removeCartItemHandler(item.product)}></i>
                                         </div>
 
                                     </div>
@@ -87,6 +86,7 @@ export const Cart = ({ history }) => {
                                 <hr />
                             </div>
                         ))}
+                        </div>
 
                         <div className="col-12 col-lg-3 my-4">
                             <div id="order_summary">
@@ -101,7 +101,7 @@ export const Cart = ({ history }) => {
                         </div>
 
                         </div>
-                    </div>
+                    
                 </>
             )}
         </>
