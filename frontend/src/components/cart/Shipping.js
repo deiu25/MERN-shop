@@ -10,13 +10,14 @@ export const Shipping = () => {
 
     const countriesList = Object.values(countries);
 
-    const { shippingInfo } = useSelector(state => state.cart);
+    const { shippingInfo } = useSelector(state => state.cart) || {};
 
-    const [address, setAddress] = useState(shippingInfo.address);
-    const [city, setCity] = useState(shippingInfo.city);
-    const [phone, setPhone] = useState(shippingInfo.phone);
-    const [postalCode, setPostalCode] = useState(shippingInfo.postalCode);
-    const [country, setCountry] = useState(shippingInfo.country);
+    const [address, setAddress] = useState(shippingInfo?.address || '');
+    const [city, setCity] = useState(shippingInfo?.city || '');
+    const [phone, setPhone] = useState(shippingInfo?.phone || '');
+    const [postalCode, setPostalCode] = useState(shippingInfo?.postalCode || '');
+    const [country, setCountry] = useState(shippingInfo?.country || '');
+    
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
