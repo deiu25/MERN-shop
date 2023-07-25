@@ -7,9 +7,12 @@ import { MetaData } from "../leyout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetails, clearErrors } from "../../actions/productActions";
 import { useParams } from 'react-router-dom';
+import { set } from 'mongoose';
 
 export const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
+
+  const [quantity, setQuantity] = React.useState(1);
   
   const notifyError = (message) => {
     toast.error(message);
@@ -33,6 +36,24 @@ export const ProductDetails = ({ match }) => {
       dispatch(clearErrors());
     };
   }, [dispatch, error, id]);
+
+  const incraseQty = () => {
+    const count = document.querySelector(".count");
+
+    if (count.valueAsNumber >= product.stock) return;
+
+    const qty = count.valueAsNumber + 1;
+    setQuantity(qty);
+  };
+
+  const decraseQty = () => {
+    const count = document.querySelector(".count");
+
+    if (count.valueAsNumber <= 1) return;
+
+    const qty = count.valueAsNumber - 1;
+    setQuantity(qty);
+  };
 
   return (
     <>
@@ -75,16 +96,16 @@ export const ProductDetails = ({ match }) => {
 
               <p id="product_price">${product.price}</p>
               <div className="stockCounter d-inline">
-                <span className="btn btn-danger minus">-</span>
+                <span className="btn btn-danger minus" onClick={decraseQty}>-</span>
 
                 <input
                   type="number"
                   className="form-control count d-inline"
-                  value="1"
+                  value={quantity}
                   readOnly
                 />
 
-                <span className="btn btn-primary plus">+</span>
+                <span className="btn btn-primary plus"onClick={incraseQty}>+</span>
               </div>
               <button
                 type="button"
