@@ -1,3 +1,5 @@
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import { toast } from 'react-toastify';
 
 import { Carousel } from "react-bootstrap";
@@ -7,7 +9,7 @@ import { MetaData } from "../leyout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductDetails, clearErrors } from "../../actions/productActions";
 import { useParams } from 'react-router-dom';
-import { set } from 'mongoose';
+import { addToCart } from '../../actions/cartActions';
 
 export const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
@@ -36,6 +38,11 @@ export const ProductDetails = ({ match }) => {
       dispatch(clearErrors());
     };
   }, [dispatch, error, id]);
+
+  const addToCartHandler = () => {
+    dispatch(addToCart(product._id, quantity));
+    toast.success("Item Added to Cart");
+};
 
   const incraseQty = () => {
     const count = document.querySelector(".count");
@@ -85,10 +92,19 @@ export const ProductDetails = ({ match }) => {
               <hr />
 
               <div className="rating-outer">
-                <div
-                  className="rating-inner"
-                  style={{ width: `${(product.ratings / 5) * 100}%` }}
-                ></div>
+                {
+                  [...Array(5)].map((star, i) => {
+                    const ratingValue = i + 1;
+                    return (
+                      <i
+                        key={i}
+                        className={
+                          `bi ${ratingValue <= product.ratings ? 'bi-star-fill' : 'bi-star'}`
+                        }
+                      ></i>
+                    );
+                  })
+                }
               </div>
               <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
 
@@ -110,10 +126,12 @@ export const ProductDetails = ({ match }) => {
               <button
                 type="button"
                 id="cart_btn"
-                className="btn btn-primary d-inline ml-4"
-              >
+                className="btn btn-primary d-inline ml-4" 
+                disabled={product.stock === 0}
+                onClick={addToCartHandler}  // updated here
+            >
                 Add to Cart
-              </button>
+            </button>
 
               <hr />
 

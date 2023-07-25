@@ -3,16 +3,22 @@ import thunk from 'redux-thunk';
 
 import { productReducers, productDetailsReducer } from './reducers/productReducers';
 import { authReducer, userReducer, forgotPasswordReducer } from './reducers/userReducers';
+import { cartReducer } from './reducers/cartReducers';
 
 const reducer = combineReducers({
     products: productReducers,
     productDetails: productDetailsReducer,
     auth: authReducer,
     user: userReducer,
-    forgotPassword: forgotPasswordReducer
+    forgotPassword: forgotPasswordReducer,
+    cart: cartReducer
 });
 
-let initialState = {};
+let initialState = {
+    cart: {
+        cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
+    }
+};
 
 const store = configureStore({
   reducer,

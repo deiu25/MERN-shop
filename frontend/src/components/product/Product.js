@@ -1,3 +1,5 @@
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -14,12 +16,22 @@ export const Product = ({product, col}) => {
               <h5 className="card-title">
                 <Link to={`/product/${product._id}`}>{product.name}</Link>
               </h5>
-              <div className="ratings mt-auto">
-                <div className="rating-outer">
-                  <div className="rating-inner" style={{width: `${(product.ratings / 5) * 100}%`}}></div>
-                </div>
-                <span id="no_of_reviews">({product.numOfReviews}) Reviews</span>
+              <div className="rating-outer">
+                {
+                  [...Array(5)].map((star, i) => {
+                    const ratingValue = i + 1;
+                    return (
+                      <i
+                        key={i}
+                        className={
+                          `bi ${ratingValue <= product.ratings ? 'bi-star-fill' : 'bi-star'}`
+                        }
+                      ></i>
+                    );
+                  })
+                }
               </div>
+              <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
               <p className="card-text">${product.price}</p>
               <Link to={`/product/${product._id}`} id="view_btn" className="btn btn-block">View Details</Link>
             </div>

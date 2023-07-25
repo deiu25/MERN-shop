@@ -197,14 +197,9 @@ footer {
 
 /* Ratings */
 .rating-outer {
-  display: inline-block;
   position: relative;
-  font-family: FontAwesome;
   color: var(--color-yellow);
-}
-
-.rating-outer::before {
-  content: "\f006 \f006 \f006 \f006 \f006";
+  content: "bi-star bi-star bi-star bi-star bi-star";
 }
 
 .rating-inner {
@@ -214,10 +209,7 @@ footer {
   white-space: nowrap;
   overflow: hidden;
   width: 0;
-}
-
-.rating-inner::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
+  content: "bi-star-fill bi-star-fill bi-star-fill bi-star-fill bi-star-fill";
   color: var(--color-yellow-dark);
 }
 
