@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
-
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, removeItemFromCart } from '../../actions/cartActions';

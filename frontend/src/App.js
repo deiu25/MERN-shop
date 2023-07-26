@@ -8,6 +8,10 @@ import { Shipping } from "./components/cart/Shipping";
 import { ConfirmOrder } from "./components/cart/ConfirmOrder";
 import { Payment } from "./components/cart/Payment";
 import { OrderSuccessProcess } from "./components/cart/OrderSuccessProcess";
+
+import { ListOrders } from "./components/order/ListOrders";
+import { OrderDetails } from "./components/order/OrderDetails";
+
 import { Login } from "./components/user/Login";
 import { Register } from "./components/user/Register";
 import { useEffect, useState } from "react";
@@ -64,6 +68,8 @@ function App() {
             } />
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register/>}/>
+            <Route path="/orders/me" element={<PrivateComponent element={ListOrders} />} />
+            <Route path="/order/:id" element={<PrivateComponent element={OrderDetails} />} />
             <Route path="/me" element={<PrivateComponent element={Profile} />} />
             <Route path="/me/update" element={<PrivateComponent element={UpdateProfile} />} />
             <Route path="/password/update" element={<PrivateComponent element={UpdatePassword} />} />
