@@ -1,11 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
 import { CheckoutSteps } from './CheckoutSteps';
 import { useDispatch, useSelector } from 'react-redux'
-import { saveShippingInfo } from '../../actions/cartActions';
 import { toast } from 'react-toastify';
 
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { createOrder, clearErrors } from '../../actions/orderActions'
 import  { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js'
 import axios from 'axios'
 
@@ -29,12 +29,27 @@ export const Payment = () => {
 
     const { user } = useSelector(state => state.auth);
     const { cartItems, shippingInfo } = useSelector(state => state.cart);
+    const { error } = useSelector(state => state.newOrder);
 
     useEffect(() => {
-       
-    }, [])
+       if (error) {
+           toast.error(error);
+           dispatch(clearErrors());
+       }
+    }, [dispatch, error]);
+
+    const order = {
+        orderItems: cartItems,
+        shippingInfo
+    }
 
     const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
+    if (orderInfo) {
+        order.itemsPrice = orderInfo.itemsPrice;
+        order.shippingPrice = orderInfo.shippingPrice;
+        order.taxPrice = orderInfo.taxPrice;
+        order.totalPrice = orderInfo.totalPrice;
+    }
 
     const paymentData = {
         amount: Math.round(orderInfo.totalPrice * 100)
@@ -81,7 +96,12 @@ export const Payment = () => {
                 // The payment is processed or not
                 if (result.paymentIntent.status === 'succeeded') {
 
-                    dispatch(saveShippingInfo(shippingInfo));
+                    order.paymentInfo = {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status
+                    }
+
+                    dispatch(createOrder(order));
 
                     navigate('/success');
                 } else {
@@ -140,7 +160,6 @@ export const Payment = () => {
                             id="pay_btn"
                             type="submit"
                             className="btn btn-block py-3"
-                            disabled={true}
                         >
 
                             Pay {` - ${orderInfo && orderInfo.totalPrice}`}

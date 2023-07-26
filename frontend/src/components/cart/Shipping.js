@@ -103,7 +103,8 @@ export const Shipping = () => {
                             </select>
                         </div>
 
-                        <Link to="/order/confirm" className="btn btn-primary btn-block">Continue</Link>
+                        <button type="submit" className="btn btn-primary btn-block">Continue</button>
+                        
                     </form>
                 </div>
             </div>

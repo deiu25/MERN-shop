@@ -2,16 +2,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
 
 import { CheckoutSteps } from './CheckoutSteps';
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { saveShippingInfo } from '../../actions/cartActions';
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 export const ConfirmOrder = () => {
 
     const { cartItems, shippingInfo } = useSelector(state => state.cart);
     const { user } = useSelector(state => state.auth);
 
-    const dispatch = useDispatch();
+
     const navigate = useNavigate();
 
     // Calculate Order Prices
@@ -79,7 +78,7 @@ export const ConfirmOrder = () => {
                                 </div>
 
                                 <div className="col-4 col-lg-3 mt-4 mt-lg-0">
-                                    <p>{item.quantity} Piece(s)</p>
+                                    <p>{item.quantity} x ${item.price} = <b>${(item.quantity * item.price).toFixed(2)}</b></p>
                                 </div>
                             </div>
                             <hr />

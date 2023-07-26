@@ -7,6 +7,7 @@ import { Cart } from "./components/cart/Cart";
 import { Shipping } from "./components/cart/Shipping";
 import { ConfirmOrder } from "./components/cart/ConfirmOrder";
 import { Payment } from "./components/cart/Payment";
+import { OrderSuccessProcess } from "./components/cart/OrderSuccessProcess";
 import { Login } from "./components/user/Login";
 import { Register } from "./components/user/Register";
 import { useEffect, useState } from "react";
@@ -30,18 +31,18 @@ function App() {
 
   const [stripeApiKey, setStripeApiKey] = useState('');
 
-  const stripePromise = loadStripe('your_stripe_public_key_here');
-
   useEffect(() => {
     store.dispatch(loadUser());
 
-    async function getStripApiKey() {
+    async function getStripeApiKey() {
       const { data } = await axios.get('/api/v1/stripeapi');
       setStripeApiKey(data.stripeApiKey);
     }
 
-    getStripApiKey();
+    getStripeApiKey();
   }, []);
+
+  const stripePromise = loadStripe(stripeApiKey);
   
   return (
     <Router>
@@ -55,6 +56,7 @@ function App() {
             <Route path="/cart/:id?" element={<Cart />}/>
             <Route path="/shipping" element={<PrivateComponent element={Shipping} />} />
             <Route path="/order/confirm" element={<PrivateComponent element={ConfirmOrder} />} />
+            <Route path="/success" element={<PrivateComponent element={OrderSuccessProcess} />} />
             <Route path="/payment" element={
               <Elements stripe={stripePromise}>
                 <Payment />
