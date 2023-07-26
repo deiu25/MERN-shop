@@ -79,11 +79,10 @@ export const Header = () => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                {user && user.role !== "admin" ? (
-                  <Dropdown.Item href="/orders/me">Orders</Dropdown.Item>
-                ) : (
+                {user && user.role === "admin" && (
                   <Dropdown.Item href="/dashboard">Dashboard</Dropdown.Item>
-                )}
+                  )}
+                  <Dropdown.Item href="/orders/me">Orders</Dropdown.Item>
                 <Dropdown.Item href="/me">Profile</Dropdown.Item>
                 <Dropdown.Item onClick={logoutHandler}>Logout</Dropdown.Item>
               </Dropdown.Menu>
