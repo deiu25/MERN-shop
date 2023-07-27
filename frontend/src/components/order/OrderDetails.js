@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
 import { Loader } from "../leyout/Loader";
 import { toast } from 'react-toastify';
@@ -11,7 +11,6 @@ export const OrderDetails = () => {
 
     const { id } = useParams();
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const { loading, error, order = {} } = useSelector(state => state.orderDetails);
     const { shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus } = order

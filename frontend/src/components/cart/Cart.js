@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart, removeItemFromCart } from '../../actions/cartActions';
+import { addItemToCart, removeItemFromCart } from '../../actions/cartActions'
 
 export const Cart = () => {
 
@@ -16,7 +16,7 @@ export const Cart = () => {
 
         if (newQty > stock) return;
 
-        dispatch(addToCart(id, newQty));
+        dispatch(addItemToCart(id, newQty))
     }
 
     const decreaseQty = (id, quantity) => {
@@ -25,7 +25,7 @@ export const Cart = () => {
 
         if (newQty <= 0) return;
 
-        dispatch(addToCart(id, newQty));
+        dispatch(addItemToCart(id, newQty))
 
     }
 

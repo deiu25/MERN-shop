@@ -126,6 +126,7 @@ export const Payment = () => {
                 <div className="col-10 col-lg-5">
                     <form className="shadow-lg" onSubmit={submitHandler}>
                         <h1 className="mb-4">Card Info</h1>
+                        <p className="mb-3">Test Card: <span>4000056655665556</span></p>
                         <div className="form-group">
                             <label htmlFor="card_num_field">Card Number</label>
                             <CardNumberElement

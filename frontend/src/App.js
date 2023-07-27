@@ -2,7 +2,7 @@ import "./App.css";
 import { Home } from "./components/Home";
 import { Footer } from "./components/leyout/Footer";
 import { Header } from "./components/leyout/Header";
-import { ProductDetails } from "./components/product/ProductDetails";
+
 import { Cart } from "./components/cart/Cart";
 import { Shipping } from "./components/cart/Shipping";
 import { ConfirmOrder } from "./components/cart/ConfirmOrder";
@@ -30,6 +30,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import { ProductDetails } from "./components/product/ProductDetails";
 
 function App() {
 
