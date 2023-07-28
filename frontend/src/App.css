@@ -326,6 +326,10 @@ footer {
   text-align: center;
 }
 
+.plus {
+  margin-right: 10px;
+}
+
 .plus,
 .minus {
   padding: 0.1rem 0.5rem;
