@@ -30,6 +30,7 @@ import { Dashboard } from "./components/admin/Dashboard";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from 'react-redux'
 
 import { loadUser } from "./actions/userActions";
 import store from "./store";
@@ -42,23 +43,28 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import { ProductDetails } from "./components/product/ProductDetails";
+import { ProductsList } from "./components/admin/ProductsList";
+import { NewProduct } from "./components/admin/NewProduct";
+
 
 function App() {
 
   const [stripeApiKey, setStripeApiKey] = useState('');
 
   useEffect(() => {
-    store.dispatch(loadUser());
+    store.dispatch(loadUser())
 
-    async function getStripeApiKey() {
+    async function getStripApiKey() {
       const { data } = await axios.get('/api/v1/stripeapi');
-      setStripeApiKey(data.stripeApiKey);
+
+      setStripeApiKey(data.stripeApiKey)
     }
 
-    getStripeApiKey();
-  }, []);
+    getStripApiKey();
 
-  const stripePromise = loadStripe(stripeApiKey);
+  }, [])
+
+  const { user, isAuthenticated, loading } = useSelector(state => state.auth)
   
   return (
     <Router>
@@ -73,24 +79,33 @@ function App() {
             <Route path="/shipping" element={<PrivateComponent element={Shipping} />} />
             <Route path="/order/confirm" element={<PrivateComponent element={ConfirmOrder} />} />
             <Route path="/success" element={<PrivateComponent element={OrderSuccessProcess} />} />
-            <Route path="/payment" element={
-              <Elements stripe={stripePromise}>
-                <Payment />
-              </Elements>
-            } />
+             {stripeApiKey && (
+              <Route path="/payment" element={
+                <Elements stripe={loadStripe(stripeApiKey)}>
+                  <PrivateComponent element={Payment} />
+                </Elements>
+              } />
+            )}
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register/>}/>
-            <Route path="/orders/me" element={<PrivateComponent element={ListOrders} />} />
-            <Route path="/order/:id" element={<PrivateComponent element={OrderDetails} />} />
+            <Route path="/password/forgot" element={<ForgotPassword />} />
+            <Route path="/password/reset/:token" element={<NewPassword />} />
             <Route path="/me" element={<PrivateComponent element={Profile} />} />
             <Route path="/me/update" element={<PrivateComponent element={UpdateProfile} />} />
             <Route path="/password/update" element={<PrivateComponent element={UpdatePassword} />} />
-            <Route path="/password/forgot" element={<ForgotPassword />} />
-            <Route path="/password/reset/:token" element={<NewPassword />} />
+            
+            <Route path="/orders/me" element={<PrivateComponent element={ListOrders} />} />
+            <Route path="/order/:id" element={<PrivateComponent element={OrderDetails} />} />
+          </Routes>
+          </div>
+        <Routes>
             <Route path="/dashboard" isAdmin={true} element={<PrivateComponent element={Dashboard} />} />
+            <Route path="/admin/products" isAdmin={true} element={<PrivateComponent element={ProductsList} />} />
+            <Route path="/admin/product" isAdmin={true} element={<PrivateComponent element={NewProduct} />} />
         </Routes>
-      </div>
+        {!loading && (!isAuthenticated || user.role !== 'admin') && (
       <Footer />
+    )}
     </div>
     </Router>
   );

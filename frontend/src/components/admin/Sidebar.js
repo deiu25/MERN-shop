@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+
 export const Sidebar = () => {
   return (
     <div className="sidebar-wrapper">
@@ -9,9 +10,9 @@ export const Sidebar = () => {
                 <li>
                     <Link to="/dashboard"><i className='fa fa-tachometer-alt'></i> Dashboard</Link>
                 </li>
-                <li>
-                    <Link to="#productSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle"><i className='fa fa-box-open'></i> Products</Link>
-                    <ul className="collapse list-unstyled" id="productSubmenu">
+                <li className='dropdown'>
+                    <Link to="#productSubmenu" data-toggle="collapse" aria-expanded="false" className="dropbtn"><i className='fa fa-box-open'></i> Products</Link>
+                    <ul className="dropdown-content" id="productSubmenu">
                         <li>
                             <Link to="/admin/products"><i className='fa fa-clipboard-list'></i> All</Link>
                         </li>
@@ -20,6 +21,7 @@ export const Sidebar = () => {
                         </li>
                     </ul>
                 </li>
+
                 <li>
                     <Link to="/admin/orders"><i className='fa fa-shopping-cart'></i> Orders</Link>
                 </li>

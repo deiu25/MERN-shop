@@ -4,6 +4,14 @@ import {
     ALL_PRODUCTS_SUCCESS,
     ALL_PRODUCTS_FAIL,
 
+    ADMIN_PRODUCTS_REQUEST,
+    ADMIN_PRODUCTS_SUCCESS,
+    ADMIN_PRODUCTS_FAIL,
+
+    NEW_PRODUCT_SUCCESS,
+    NEW_PRODUCT_REQUEST,
+    NEW_PRODUCT_FAIL,
+
     PRODUCT_DETAILS_REQUEST,
     PRODUCT_DETAILS_SUCCESS,
     PRODUCT_DETAILS_FAIL,
@@ -60,6 +68,29 @@ export const getProductDetails = (id) => async (dispatch) => {
     }
 }
 
+// Get Admin products
+export const getAdminProducts = () => async (dispatch) => {
+    try {
+        dispatch({ type: ADMIN_PRODUCTS_REQUEST });
+
+        const { data } = await axios.get(`/api/v1/admin/products`);
+
+        dispatch({
+            type: ADMIN_PRODUCTS_SUCCESS,
+            
+            payload: data.products
+        })
+
+    } catch (error) {
+
+        dispatch({
+
+            type: ADMIN_PRODUCTS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
 // New review
 export const newReview = (reviewData) => async (dispatch) => {
     try {
@@ -81,6 +112,32 @@ export const newReview = (reviewData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: NEW_REVIEW_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+// New product
+export const newProduct = (productData) => async (dispatch) => {
+    try {
+        dispatch({ type: NEW_PRODUCT_REQUEST });
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        const { data } = await axios.post(`/api/v1/admin/product/new`, productData, config);
+
+        dispatch({
+            type: NEW_PRODUCT_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: NEW_PRODUCT_FAIL,
             payload: error.response.data.message
         })
     }
