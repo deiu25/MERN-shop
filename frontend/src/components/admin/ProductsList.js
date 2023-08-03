@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Table } from 'react-bootstrap';
-import { getAdminProducts, clearErrors } from '../../actions/productActions';
+import { getAdminProducts, deleteProduct, clearErrors } from '../../actions/productActions';
+import { DELETE_PRODUCT_RESET } from '../../constants/productConstants'
 
 export const ProductsList = () => {
 
@@ -14,6 +15,7 @@ export const ProductsList = () => {
     const navigate = useNavigate();
 
     const { loading, error, products } = useSelector(state => state.products);
+    const { error: deleteError, isDeleted } = useSelector(state => state.product)
 
     useEffect(() => {
         dispatch(getAdminProducts());
@@ -23,29 +25,74 @@ export const ProductsList = () => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, error])
+        if (deleteError) {
+            toast.error(deleteError);
+            dispatch(clearErrors())
+        }
+
+        if (isDeleted) {
+            toast.success('Product deleted successfully');
+            navigate('/admin/products')
+            dispatch({ type: DELETE_PRODUCT_RESET })
+        }
+
+    }, [dispatch, error, deleteError, isDeleted, navigate])
 
     const setProducts = () => {
-        const data = []
+        const data = {
+            columns: [
+                {
+                    label: 'Product ID',
+                    field: 'ProductId',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Name',
+                    field: 'Name',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Price',
+                    field: 'Price',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Stock',
+                    field: 'Stock',
+                    sort: 'asc'
+                },
+                {
+                    label: 'Action',
+                    field: 'action',
+                    sort: 'asc'
+                }
+            ],
+            rows: []
+        }
 
         products.forEach(product => {
-            data.push({
+            data.rows.push({
                 ProductId: product._id,
                 Name: product.name,
                 Price: product.price,
                 Stock: product.stock,
-                action: <>
-                    <Link to={`/admin/products/${product._id}`} className="btn btn-primary">
-                        <i className="fa fa-pencil"></i>
-                    </Link>
-                    <button className="btn btn-danger mx-2">
-                        <i className="fa fa-trash"></i>
-                    </button>
-                </>
+                action:
+                    <>
+                        <Link to={`/admin/products/${product._id}`} className="btn btn-primary">
+                            <i className="fa fa-pencil"></i>
+                        </Link>
+                        <button className="btn btn-danger mx-2" onClick={() => deleteProductHandler(product._id)}>  
+                            <i className="fa fa-trash"></i>
+                        </button>
+                    </>
             })
         })
 
-        return data
+        return data;
+    }
+
+    const deleteProductHandler = (id) => {
+        dispatch(deleteProduct(id))
     }
 
     return (
@@ -55,11 +102,10 @@ export const ProductsList = () => {
                 <div className="col-12 col-md-2">
                     <Sidebar />
                 </div>
-    
                 <div className="col-12 col-md-10">
                     <>
                         <h1 className="my-5">All Products</h1>
-    
+
                         {loading ? <Loader /> : (
                             <Table striped bordered hover responsive className="table-sm">
                                 <thead>
@@ -71,19 +117,19 @@ export const ProductsList = () => {
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-    
+
                                 <tbody>
-                                    {products.map(product => (
+                                    {products && products.map(product => (
                                         <tr key={product._id}>
                                             <td>{product._id}</td>
                                             <td>{product.name}</td>
-                                            <td>{product.price}</td>
+                                            <td>${product.price}</td>
                                             <td>{product.stock}</td>
                                             <td>
                                                 <Link to={`/admin/products/${product._id}`} className="btn btn-primary">
                                                     <i className="fa fa-pencil"></i>
                                                 </Link>
-                                                <button className="btn btn-danger mx-2">
+                                                <button className="btn btn-danger mx-2" onClick={() => deleteProductHandler(product._id)}>
                                                     <i className="fa fa-trash"></i>
                                                 </button>
                                             </td>
@@ -97,4 +143,4 @@ export const ProductsList = () => {
             </div>
         </>
     )
-}    
+}
