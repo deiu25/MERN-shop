@@ -45,6 +45,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import { ProductDetails } from "./components/product/ProductDetails";
 import { ProductsList } from "./components/admin/ProductsList";
 import { NewProduct } from "./components/admin/NewProduct";
+import { UpdateProduct } from "./components/admin/UpdateProduct";
 
 
 function App() {
@@ -102,6 +103,7 @@ function App() {
             <Route path="/dashboard" isAdmin={true} element={<PrivateComponent element={Dashboard} />} />
             <Route path="/admin/products" isAdmin={true} element={<PrivateComponent element={ProductsList} />} />
             <Route path="/admin/product" isAdmin={true} element={<PrivateComponent element={NewProduct} />} />
+            <Route path="/admin/product/:id" isAdmin={true} element={<PrivateComponent element={UpdateProduct} />} />
         </Routes>
         {!loading && (!isAuthenticated || user.role !== 'admin') && (
       <Footer />

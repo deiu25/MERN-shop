@@ -11,11 +11,17 @@ import { DELETE_PRODUCT_RESET } from '../../constants/productConstants'
 
 export const ProductsList = () => {
 
+
+    const notifyError = (message) => {
+        toast.error(message);
+      };
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { loading, error, products } = useSelector(state => state.products);
     const { error: deleteError, isDeleted } = useSelector(state => state.product)
+    
 
     useEffect(() => {
         dispatch(getAdminProducts());
@@ -78,21 +84,22 @@ export const ProductsList = () => {
                 Stock: product.stock,
                 action:
                     <>
-                        <Link to={`/admin/products/${product._id}`} className="btn btn-primary">
+                        <Link to={`/admin/product/${product._id}`} className="btn btn-primary py-1 px-2">
                             <i className="fa fa-pencil"></i>
                         </Link>
-                        <button className="btn btn-danger mx-2" onClick={() => deleteProductHandler(product._id)}>  
+                        <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteProductHandler(product._id)}>
                             <i className="fa fa-trash"></i>
                         </button>
                     </>
             })
-        })
-
+        }
+        )
         return data;
     }
 
     const deleteProductHandler = (id) => {
         dispatch(deleteProduct(id))
+        notifyError('Product deleted successfully');
     }
 
     return (
@@ -126,10 +133,10 @@ export const ProductsList = () => {
                                             <td>${product.price}</td>
                                             <td>{product.stock}</td>
                                             <td>
-                                                <Link to={`/admin/products/${product._id}`} className="btn btn-primary">
+                                                <Link to={`/admin/product/${product._id}`} className="btn btn-primary py-1 px-2">
                                                     <i className="fa fa-pencil"></i>
                                                 </Link>
-                                                <button className="btn btn-danger mx-2" onClick={() => deleteProductHandler(product._id)}>
+                                                <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteProductHandler(product._id)}>
                                                     <i className="fa fa-trash"></i>
                                                 </button>
                                             </td>

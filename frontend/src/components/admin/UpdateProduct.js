@@ -1,19 +1,23 @@
 import { useNavigate } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
+import { Loader } from "../leyout/Loader";
 import { Sidebar } from './Sidebar';
 import { toast } from 'react-toastify';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { newProduct, clearErrors } from '../../actions/productActions';
+import { updateProduct, getProductDetails, clearErrors } from '../../actions/productActions';
 
 import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
 
-export const NewProduct = () => {
+export const UpdateProduct = ({ match }) => {
 
-    const notifyError = (message) => {
-        toast.success(message);
-      };
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const productId = match.params.id;
+
+    const { loading, error, product } = useSelector(state => state.productDetails);
+    const { loading: updateLoading, error: updateError, isUpdated } = useSelector(state => state.product);
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState(0);
@@ -22,8 +26,8 @@ export const NewProduct = () => {
     const [stock, setStock] = useState(0);
     const [seller, setSeller] = useState('');
     const [images, setImages] = useState([]);
+    const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([])
-
 
     const categories = [
         "Electronics",
@@ -40,27 +44,40 @@ export const NewProduct = () => {
         "Home",
       ];
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
-    const { loading, error, success } = useSelector(state => state.newProduct);
-
     useEffect(() => {
-            
-            if (error) {
-                toast.error(error);
-                dispatch(clearErrors())
-            }
-    
-            if (success) {
-                navigate('/admin/products')
-                toast.success('Product created successfully')
-                dispatch({ type: NEW_PRODUCT_RESET })
-            }
+        if (product && product._id !== productId) {
+            dispatch(getProductDetails(productId))
+        } else {
+            setName(product.name);
+            setPrice(product.price);
+            setDescription(product.description);
+            setCategory(product.category);
+            setSeller(product.seller);
+            setStock(product.stock);
+            setOldImages(product.images)
         }
-    , [dispatch, error, success, navigate])
+
+        if (error) {
+            toast.error(error);
+            dispatch(clearErrors())
+        }
+
+        if (updateError) {
+            toast.error(updateError);
+            dispatch(clearErrors())
+        }
+
+        if (isUpdated) {
+            navigate('/admin/products')
+            toast.success('Product updated successfully')
+            dispatch({ type: NEW_PRODUCT_RESET })
+        }
+    }
+
+    , [dispatch, error, isUpdated, navigate, product, productId, updateError])
 
     const submitHandler = (e) => {
+
         e.preventDefault();
 
         const formData = new FormData();
@@ -68,31 +85,28 @@ export const NewProduct = () => {
         formData.set('price', price);
         formData.set('description', description);
         formData.set('category', category);
-        formData.set('stock', stock);
         formData.set('seller', seller);
+        formData.set('stock', stock);
 
         images.forEach(image => {
             formData.append('images', image)
         })
 
-        dispatch(newProduct(formData))
-
-        navigate('/admin/products')
-        notifyError('Product created successfully')
+        dispatch(updateProduct(product._id, formData))
     }
 
-    const onChange = (e) => {
-
+    const onChange = e => {
         const files = Array.from(e.target.files)
 
         setImagesPreview([]);
         setImages([]);
+        setOldImages([]);
 
         files.forEach(file => {
             const reader = new FileReader();
 
             reader.onload = () => {
-                if(reader.readyState === 2) {
+                if (reader.readyState === 2) {
                     setImagesPreview(oldArray => [...oldArray, reader.result])
                     setImages(oldArray => [...oldArray, reader.result])
                 }
@@ -100,22 +114,21 @@ export const NewProduct = () => {
 
             reader.readAsDataURL(file)
         })
-
     }
 
     return (
         <>
-            <MetaData title={'New Product'} />
+            <MetaData title={'Update Product'} />
             <div className="row">
                 <div className="col-12 col-md-2">
                     <Sidebar />
                 </div>
 
-                <div className="col-12 col-md-10">
-                    <>
+                {loading ? <Loader /> : (
+                    <div className="col-12 col-md-10">
                         <div className="wrapper my-5">
                             <form className="shadow-lg" onSubmit={submitHandler} encType='multipart/form-data'>
-                                <h1 className="mb-4">New Product</h1>
+                                <h1 className="mb-4">Update Product</h1>
 
                                 <div className="form-group">
                                     <label htmlFor="name_field">Name</label>
@@ -123,6 +136,7 @@ export const NewProduct = () => {
                                         type="text"
                                         id="name_field"
                                         className="form-control"
+                                        name='name'
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                     />
@@ -134,6 +148,7 @@ export const NewProduct = () => {
                                         type="text"
                                         id="price_field"
                                         className="form-control"
+                                        name='price'
                                         value={price}
                                         onChange={(e) => setPrice(e.target.value)}
                                     />
@@ -141,12 +156,12 @@ export const NewProduct = () => {
 
                                 <div className="form-group">
                                     <label htmlFor="description_field">Description</label>
-                                    <textarea className="form-control" id="description_field" rows="8" value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                                    <textarea className="form-control" id="description_field" rows="8" value={description} name='description' onChange={(e) => setDescription(e.target.value)}></textarea>
                                 </div>
 
                                 <div className="form-group">
                                     <label htmlFor="category_field">Category</label>
-                                    <select className="form-control" id="category_field" value={category} onChange={(e) => setCategory(e.target.value)}>
+                                    <select className="form-control" id="category_field" value={category} name='category' onChange={(e) => setCategory(e.target.value)}>
                                         {categories.map(category => (
                                             <option key={category} value={category}>{category}</option>
                                         ))}
@@ -159,17 +174,20 @@ export const NewProduct = () => {
                                         type="number"
                                         id="stock_field"
                                         className="form-control"
+                                        name='stock'
                                         value={stock}
                                         onChange={(e) => setStock(e.target.value)}
                                     />
                                 </div>
-                                            
+
                                 <div className="form-group">
                                     <label htmlFor="seller_field">Seller Name</label>
                                     <input
+
                                         type="text"
                                         id="seller_field"
                                         className="form-control"
+                                        name='seller'
                                         value={seller}
                                         onChange={(e) => setSeller(e.target.value)}
                                     />
@@ -191,7 +209,10 @@ export const NewProduct = () => {
                                             Choose Images
                                         </label>
                                     </div>
-
+                                            
+                                    {oldImages && oldImages.map(img => (
+                                        <img key={img} src={img.url} alt={img.url} className="mt-3 mr-2" width="55" height="52" />
+                                    ))}
                                     {imagesPreview.map(img => (
                                         <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="55" height="52" />
                                     ))}
@@ -201,15 +222,15 @@ export const NewProduct = () => {
                                     id="login_button"
                                     type="submit"
                                     className="btn btn-block py-3"
-                                    disabled={loading ? true : false}
+                                    disabled={updateLoading ? true : false}
                                 >
-                                    CREATE
+                                    UPDATE
                                 </button>
 
                             </form>
                         </div>
-                    </>
-                </div>
+                    </div>
+                )}
             </div>
         </>
     )
