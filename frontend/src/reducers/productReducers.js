@@ -134,11 +134,11 @@ export const productReducer = (state = {}, action) => {
           }
 
       case UPDATE_PRODUCT_SUCCESS:
-          return {
-              ...state,
-              loading: false,
-              isUpdated: action.payload
-          }
+        return {
+            ...state,
+            loading: false,
+            isUpdated: true,
+        };
 
 
       case DELETE_PRODUCT_FAIL:

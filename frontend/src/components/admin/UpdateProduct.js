@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
 import { Loader } from "../leyout/Loader";
 import { Sidebar } from './Sidebar';
@@ -8,13 +8,13 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { updateProduct, getProductDetails, clearErrors } from '../../actions/productActions';
 
-import { NEW_PRODUCT_RESET } from '../../constants/productConstants'
+import { NEW_PRODUCT_RESET, UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
 
-export const UpdateProduct = ({ match }) => {
+export const UpdateProduct = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const productId = match.params.id;
+    const { id: productId } = useParams();
 
     const { loading, error, product } = useSelector(state => state.productDetails);
     const { loading: updateLoading, error: updateError, isUpdated } = useSelector(state => state.product);
@@ -28,7 +28,7 @@ export const UpdateProduct = ({ match }) => {
     const [images, setImages] = useState([]);
     const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([])
-
+    
     const categories = [
         "Electronics",
         "Cameras",
@@ -45,6 +45,7 @@ export const UpdateProduct = ({ match }) => {
       ];
 
     useEffect(() => {
+
         if (product && product._id !== productId) {
             dispatch(getProductDetails(productId))
         } else {
@@ -69,12 +70,18 @@ export const UpdateProduct = ({ match }) => {
 
         if (isUpdated) {
             navigate('/admin/products')
-            toast.success('Product updated successfully')
+            toast.success('Product updated successfully');
             dispatch({ type: NEW_PRODUCT_RESET })
         }
-    }
 
-    , [dispatch, error, isUpdated, navigate, product, productId, updateError])
+    }, [dispatch, error, isUpdated, navigate, product, productId, updateError])
+
+    useEffect(() => {
+        return () => {
+            dispatch({ type: UPDATE_PRODUCT_RESET });
+        };
+    }, [dispatch]);
+    
 
     const submitHandler = (e) => {
 
@@ -95,18 +102,17 @@ export const UpdateProduct = ({ match }) => {
         dispatch(updateProduct(product._id, formData))
     }
 
-    const onChange = e => {
+    const onChange = (e) => {
         const files = Array.from(e.target.files)
 
         setImagesPreview([]);
         setImages([]);
-        setOldImages([]);
 
         files.forEach(file => {
             const reader = new FileReader();
 
             reader.onload = () => {
-                if (reader.readyState === 2) {
+                if(reader.readyState === 2) {
                     setImagesPreview(oldArray => [...oldArray, reader.result])
                     setImages(oldArray => [...oldArray, reader.result])
                 }

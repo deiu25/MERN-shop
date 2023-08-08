@@ -11,7 +11,6 @@ import { DELETE_PRODUCT_RESET } from '../../constants/productConstants'
 
 export const ProductsList = () => {
 
-
     const notifyError = (message) => {
         toast.error(message);
       };
@@ -37,7 +36,6 @@ export const ProductsList = () => {
         }
 
         if (isDeleted) {
-            toast.success('Product deleted successfully');
             navigate('/admin/products')
             dispatch({ type: DELETE_PRODUCT_RESET })
         }

@@ -53,8 +53,6 @@ export const NewProduct = () => {
             }
     
             if (success) {
-                navigate('/admin/products')
-                toast.success('Product created successfully')
                 dispatch({ type: NEW_PRODUCT_RESET })
             }
         }
