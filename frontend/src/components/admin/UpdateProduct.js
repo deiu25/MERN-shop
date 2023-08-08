@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { updateProduct, getProductDetails, clearErrors } from '../../actions/productActions';
 
-import { NEW_PRODUCT_RESET, UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
+import { UPDATE_PRODUCT_RESET } from '../../constants/productConstants'
 
 export const UpdateProduct = () => {
 
@@ -44,17 +44,17 @@ export const UpdateProduct = () => {
         "Home",
       ];
 
-    useEffect(() => {
+      useEffect(() => {
 
         if (product && product._id !== productId) {
-            dispatch(getProductDetails(productId))
+            dispatch(getProductDetails(productId));
         } else {
             setName(product.name);
             setPrice(product.price);
             setDescription(product.description);
             setCategory(product.category);
             setSeller(product.seller);
-            setStock(product.stock);
+            setStock(product.stock)
             setOldImages(product.images)
         }
 
@@ -70,8 +70,7 @@ export const UpdateProduct = () => {
 
         if (isUpdated) {
             navigate('/admin/products')
-            toast.success('Product updated successfully');
-            dispatch({ type: NEW_PRODUCT_RESET })
+            dispatch({ type: UPDATE_PRODUCT_RESET })
         }
 
     }, [dispatch, error, isUpdated, navigate, product, productId, updateError])
@@ -107,6 +106,7 @@ export const UpdateProduct = () => {
 
         setImagesPreview([]);
         setImages([]);
+        setOldImages([])
 
         files.forEach(file => {
             const reader = new FileReader();
