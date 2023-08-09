@@ -1,5 +1,3 @@
-
-
 import { Link, useNavigate } from 'react-router-dom'
 import { MetaData } from "../leyout/MetaData";
 import { Loader } from "../leyout/Loader";
@@ -8,15 +6,16 @@ import { toast } from 'react-toastify';
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Table } from 'react-bootstrap';
-import { allOrders, clearErrors } from '../../actions/orderActions';
-// import { DELETE_PRODUCT_RESET } from '../../constants/orderConstants'
-export const OrderList = () => {
+import { allOrders, clearErrors, deleteOrder } from '../../actions/orderActions';
+import { DELETE_ORDER_RESET } from '../../constants/orderConstants'
+
+export const OrderList = ({history}) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { loading, error, orders } = useSelector(state => state.allOrders);
-    //const { isDeleted } = useSelector(state => state.order)
+    const { isDeleted } = useSelector(state => state.order)
 
     useEffect(() => {
         dispatch(allOrders());
@@ -26,13 +25,16 @@ export const OrderList = () => {
             dispatch(clearErrors())
         }
 
-        // if (deleteError) {
-        //     toast.error(deleteError);
-        //     dispatch(clearErrors())
-        // }
+        if (isDeleted) {
+            navigate('/admin/orders')
+            dispatch({ type: DELETE_ORDER_RESET })
+        }
         
-    }, [dispatch, alert, error, navigate])
+    }, [dispatch, alert, error, navigate, isDeleted, history])
 
+    const deleteOrderHandler = (id) => {
+        dispatch(deleteOrder(id))
+    }
 
     const setOrders = () => {
         const data = {
@@ -125,9 +127,9 @@ export const OrderList = () => {
                                                     <i className="fa fa-eye"></i>
                                                 </Link>
 
-                                                {/* <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteOrderHandler(order._id)}>
+                                                <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteOrderHandler(order._id)}>
                                                     <i className="fa fa-trash"></i>
-                                                </button> */}
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
