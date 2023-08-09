@@ -47,6 +47,7 @@ import { ProductDetails } from "./components/product/ProductDetails";
 import { ProductsList } from "./components/admin/ProductsList";
 import { NewProduct } from "./components/admin/NewProduct";
 import { UpdateProduct } from "./components/admin/UpdateProduct";
+import { OrderList } from "./components/admin/OrderList";
 
 
 function App() {
@@ -105,6 +106,8 @@ function App() {
             <Route path="/admin/products" isAdmin={true} element={<PrivateComponent element={ProductsList} />} />
             <Route path="/admin/product" isAdmin={true} element={<PrivateComponent element={NewProduct} />} />
             <Route path="/admin/product/:id" isAdmin={true} element={<PrivateComponent element={UpdateProduct} />} />
+
+            <Route path="/admin/orders" isAdmin={true} element={<PrivateComponent element={OrderList} />} />
         </Routes>
       </div>
         {!loading && (!isAuthenticated || user.role !== 'admin') && (
