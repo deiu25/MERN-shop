@@ -72,7 +72,7 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-        <div className="container container-fluid">
+        <div className=" container-fluid">
           <Routes>
             <Route path="/" element={<Home />}/>
             <Route path="/search/:keyword" element={<Home />}/>
@@ -98,14 +98,15 @@ function App() {
             
             <Route path="/orders/me" element={<PrivateComponent element={ListOrders} />} />
             <Route path="/order/:id" element={<PrivateComponent element={OrderDetails} />} />
-          </Routes>
-          </div>
-        <Routes>
+          
+             
+        
             <Route path="/dashboard" isAdmin={true} element={<PrivateComponent element={Dashboard} />} />
             <Route path="/admin/products" isAdmin={true} element={<PrivateComponent element={ProductsList} />} />
             <Route path="/admin/product" isAdmin={true} element={<PrivateComponent element={NewProduct} />} />
             <Route path="/admin/product/:id" isAdmin={true} element={<PrivateComponent element={UpdateProduct} />} />
         </Routes>
+      </div>
         {!loading && (!isAuthenticated || user.role !== 'admin') && (
       <Footer />
     )}

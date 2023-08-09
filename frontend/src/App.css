@@ -7,6 +7,12 @@
   --font-size-large: 1.4rem;
   --font-size-extra-small: 0.8rem;
   --margin-extra-large: 8rem;
+  --default-font-size: 1rem;
+  --default-line-height: 1.5;
+  --border-radius-small: 0.2rem;
+  --border-radius-medium: 0.5rem;
+  --border-radius-large: 1rem;
+
   --color-white: #ffffff;
   --color-black: #000000;
   --color-grey: #808080;
@@ -19,11 +25,6 @@
   --color-yellow-dark: #f8ce0b;
   --default-font: "Amazon Ember", Arial, sans-serif;
   --button-font: "Calibri", Arial, sans-serif;
-  --default-font-size: 1rem;
-  --default-line-height: 1.5;
-  --border-radius-small: 0.2rem;
-  --border-radius-medium: 0.5rem;
-  --border-radius-large: 1rem;
   --border-color-light: #e3e3e3;
   --button-hover: #fbbd61;
   --button-active: #eaa44f;
@@ -92,6 +93,10 @@ nav a:hover {
 /* Active link */
 nav a.active {
   color: var(--color-danger);
+}
+
+.sidebar-no-margin {
+  padding: 0 !important;
 }
 
 /* Button Styles */

@@ -44,17 +44,16 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
     const resPerPage = 4;
-    const productsCount = await Product.countDocuments();
 
     const apiFeatures = new APIFeatures(Product.find(), req.query)
         .search()
         .filter()
+        .pagination(resPerPage);
 
-    let products = await apiFeatures.query;
-    let filteredProductsCount = products.length;
+    const products = await apiFeatures.query;
 
-    apiFeatures.pagination(resPerPage)
-    products = await apiFeatures.query;
+    const productsCount = await Product.countDocuments(); 
+    const filteredProductsCount = products.length;
 
     res.status(200).json({
         success: true,
@@ -62,9 +61,9 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
         resPerPage,
         filteredProductsCount,
         products
-    })
+    });
 
-})
+});
 
 // Get all products (Admin)  =>   /api/v1/admin/products
 exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {

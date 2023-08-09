@@ -70,6 +70,7 @@ export const UpdateProduct = () => {
 
         if (isUpdated) {
             navigate('/admin/products')
+            toast.success('Product updated successfully')
             dispatch({ type: UPDATE_PRODUCT_RESET })
         }
 

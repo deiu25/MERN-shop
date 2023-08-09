@@ -45,18 +45,26 @@ export const NewProduct = () => {
 
     const { loading, error, success } = useSelector(state => state.newProduct);
 
+    const [redirectToProducts, setRedirectToProducts] = useState(false);
+
     useEffect(() => {
-            
-            if (error) {
-                toast.error(error);
-                dispatch(clearErrors())
-            }
-    
-            if (success) {
-                dispatch({ type: NEW_PRODUCT_RESET })
-            }
+        if (error) {
+            toast.error(error);
+            dispatch(clearErrors());
         }
-    , [dispatch, error, success, navigate])
+
+        if (success) {
+            dispatch({ type: NEW_PRODUCT_RESET });
+            notifyError('Product created successfully');
+            setRedirectToProducts(true);
+        }
+    }, [dispatch, error, success, navigate]);
+
+    useEffect(() => {
+        if (redirectToProducts) {
+            navigate('/admin/products');
+        }
+    }, [redirectToProducts, navigate]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -74,9 +82,6 @@ export const NewProduct = () => {
         })
 
         dispatch(newProduct(formData))
-
-        navigate('/admin/products')
-        notifyError('Product created successfully')
     }
 
     const onChange = (e) => {

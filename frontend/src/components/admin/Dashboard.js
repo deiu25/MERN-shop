@@ -1,14 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Sidebar } from './Sidebar'
-import { Loader } from '../leyout/Loader'
-import { MetaData } from '../leyout/MetaData'
+import "../../App.css"
 
 export const Dashboard = () => {
   return (
     <>
         <div className="row">
-            <div className="col-12 col-md-2">
+            <div className="col-12 col-md-2 sidebar-no-margin">
                 <Sidebar />
             </div>
             <div className="col-12 col-md-10">
@@ -141,7 +140,7 @@ export const Dashboard = () => {
                     <div className="col-xl-3 col-sm-6 mb-3">
                         <div className="card text-white bg-primary o-hidden h-100">
                             <div className="card-body">
-                                <img className="img-fluid" src="https://res.cloudinary.com/shopit/image/upload/v1606323577/products/earphone.jpg" />
+                                <img className="img-fluid" src="https://res.cloudinary.com/shopit/image/upload/v1606323577/products/earphone.jpg" alt=''/>
                             </div>
                             <Link className="card-footer text-white clearfix small z-1" to="/admin/products">
                                 <span className="float-left">View Details</span>
@@ -155,7 +154,7 @@ export const Dashboard = () => {
                     <div className="col-xl-3 col-sm-6 mb-3">
                         <div className="card text-white bg-success o-hidden h-100">
                             <div className="card-body">
-                                <img className="img-fluid" src="https://res.cloudinary.com/shopit/image/upload/v1606323577/products/earphone.jpg" />
+                                <img className="img-fluid" src="https://res.cloudinary.com/shopit/image/upload/v1606323577/products/earphone.jpg" alt=''/>
                             </div>
                             <Link className="card-footer text-white clearfix small z-1" to="/admin/products">
                                 <span className="float-left">View Details</span>
@@ -169,7 +168,7 @@ export const Dashboard = () => {
                     <div className="col-xl-3 col-sm-6 mb-3">
                         <div className="card text-white bg-danger o-hidden h-100">
                             <div className="card-body">
-                                <img className="img-fluid" src="https://res.cloudinary.com/shopit/image/upload/v1606323577/products/earphone.jpg" />
+                                <img className="img-fluid" src="https://res.cloudinary.com/shopit/image/upload/v1606323577/products/earphone.jpg" alt=''/>
                             </div>
                             <Link className="card-footer text-white clearfix small z-1" to="/admin/products">
                                 <span className="float-left">View Details</span>
@@ -183,7 +182,7 @@ export const Dashboard = () => {
                     <div className="col-xl-3 col-sm-6 mb-3">
                         <div className="card text-white bg-info o-hidden h-100">
                             <div className="card-body">
-                                <img className="img-fluid" src="https://res.cloudinary.com/shopit/image/upload/v1606323577/products/earphone.jpg" />
+                                <img className="img-fluid" src="https://res.cloudinary.com/shopit/image/upload/v1606323577/products/earphone.jpg" alt=''/>
                             </div>
                             <Link className="card-footer text-white clearfix small z-1" to="/admin/products">
                                 <span className="float-left">View Details</span>
