@@ -25,6 +25,7 @@ import { UpdateProfile } from "./components/user/UpdateProfile";
 import { UpdatePassword } from "./components/user/UpdatePassword";
 import { ForgotPassword } from "./components/user/ForgotPassword";
 import { NewPassword } from "./components/user/NewPassword";
+import { UsersList } from "./components/admin/UsersList";
 
 // Admin Imports
 import { Dashboard } from "./components/admin/Dashboard";
@@ -110,6 +111,7 @@ function App() {
 
             <Route path="/admin/orders" isAdmin={true} element={<PrivateComponent element={OrderList} />} />
             <Route path="/admin/order/:id" isAdmin={true} element={<PrivateComponent element={ProcessOrder} />} />
+            <Route path="/admin/users" isAdmin={true} element={<PrivateComponent element={UsersList} />} />
         </Routes>
       </div>
         {!loading && (!isAuthenticated || user.role !== 'admin') && (
