@@ -42,59 +42,6 @@ export const ProductsList = () => {
 
     }, [dispatch, error, deleteError, isDeleted, navigate])
 
-    const setProducts = () => {
-        const data = {
-            columns: [
-                {
-                    label: 'Product ID',
-                    field: 'ProductId',
-                    sort: 'asc'
-                },
-                {
-                    label: 'Name',
-                    field: 'Name',
-                    sort: 'asc'
-                },
-                {
-                    label: 'Price',
-                    field: 'Price',
-                    sort: 'asc'
-                },
-                {
-                    label: 'Stock',
-                    field: 'Stock',
-                    sort: 'asc'
-                },
-                {
-                    label: 'Action',
-                    field: 'action',
-                    sort: 'asc'
-                }
-            ],
-            rows: []
-        }
-
-        products.forEach(product => {
-            data.rows.push({
-                ProductId: product._id,
-                Name: product.name,
-                Price: product.price,
-                Stock: product.stock,
-                action:
-                    <>
-                        <Link to={`/admin/product/${product._id}`} className="btn btn-primary py-1 px-2">
-                            <i className="fa fa-pencil"></i>
-                        </Link>
-                        <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => deleteProductHandler(product._id)}>
-                            <i className="fa fa-trash"></i>
-                        </button>
-                    </>
-            })
-        }
-        )
-        return data;
-    }
-
     const deleteProductHandler = (id) => {
         dispatch(deleteProduct(id))
         notifyError('Product deleted successfully');

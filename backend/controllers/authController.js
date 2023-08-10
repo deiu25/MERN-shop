@@ -267,9 +267,11 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     );
   }
 
-  // Remove avatar from cloudinary: TODO
+  // Remove avatar from cloudinary
+  const image_id = user.avatar.public_id;
+  await cloudinary.v2.uploader.destroy(image_id);
 
-  await user.remove();
+  await User.findByIdAndRemove(req.params.id);
 
   res.status(200).json({
     success: true,

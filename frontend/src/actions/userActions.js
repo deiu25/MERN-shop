@@ -4,7 +4,6 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    CLEAR_ERRORS,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
@@ -15,11 +14,9 @@ import {
     LOGOUT_FAIL,
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_SUCCESS,
-    UPDATE_PROFILE_RESET,
     UPDATE_PROFILE_FAIL,
     UPDATE_PASSWORD_REQUEST,
     UPDATE_PASSWORD_SUCCESS,
-    UPDATE_PASSWORD_RESET,
     UPDATE_PASSWORD_FAIL,
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
@@ -35,12 +32,11 @@ import {
     USER_DETAILS_FAIL,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
-    UPDATE_USER_RESET,
     UPDATE_USER_FAIL,
     DELETE_USER_REQUEST,
     DELETE_USER_SUCCESS,
-    DELETE_USER_RESET,
     DELETE_USER_FAIL,
+    CLEAR_ERRORS,
 } from "../constants/userConstants";
 
 // Login
@@ -215,16 +211,24 @@ export const getUserDetails = (id) => async (dispatch) => {
     }
 }
 
-// Delete user
-export const deleteUser = () => async (dispatch) => {
+// Delete user - ADMIN
+export const deleteUser = (id) => async (dispatch) => {
     try {
-        dispatch({ type: DELETE_USER_REQUEST });
-        
-        const { data } = await axios.delete("/api/v1/me/delete");
 
-        dispatch({ type: DELETE_USER_SUCCESS, payload: data.success });
+        dispatch({ type: DELETE_USER_REQUEST })
+
+        const { data } = await axios.delete(`/api/v1/admin/user/${id}`)
+
+        dispatch({
+            type: DELETE_USER_SUCCESS,
+            payload: data.success
+        })
+
     } catch (error) {
-        dispatch({ type: DELETE_USER_FAIL, payload: error.response.data.message });
+        dispatch({
+            type: DELETE_USER_FAIL,
+            payload: error.response.data.message
+        })
     }
 }
 
