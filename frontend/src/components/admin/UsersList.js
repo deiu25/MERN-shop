@@ -94,7 +94,7 @@ export const UsersList = () => {
     <>
         <MetaData title={'All Users'} />
         <div className="row">
-            <div className="col-12 col-md-2">
+            <div className="col-12 col-md-2 sidebar-no-margin">
                 <Sidebar />
             </div>
 

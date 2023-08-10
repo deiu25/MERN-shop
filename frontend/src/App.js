@@ -50,6 +50,7 @@ import { NewProduct } from "./components/admin/NewProduct";
 import { UpdateProduct } from "./components/admin/UpdateProduct";
 import { OrderList } from "./components/admin/OrderList";
 import { ProcessOrder } from "./components/admin/ProcessOrder";
+import { UpdateUser } from "./components/admin/UpdateUser";
 
 
 function App() {
@@ -112,6 +113,7 @@ function App() {
             <Route path="/admin/orders" isAdmin={true} element={<PrivateComponent element={OrderList} />} />
             <Route path="/admin/order/:id" isAdmin={true} element={<PrivateComponent element={ProcessOrder} />} />
             <Route path="/admin/users" isAdmin={true} element={<PrivateComponent element={UsersList} />} />
+            <Route path="/admin/user/:id" isAdmin={true} element={<PrivateComponent element={UpdateUser} />} />
         </Routes>
       </div>
         {!loading && (!isAuthenticated || user.role !== 'admin') && (

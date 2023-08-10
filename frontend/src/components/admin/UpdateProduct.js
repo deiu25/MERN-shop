@@ -127,7 +127,7 @@ export const UpdateProduct = () => {
         <>
             <MetaData title={'Update Product'} />
             <div className="row">
-                <div className="col-12 col-md-2">
+                <div className="col-12 col-md-2 sidebar-no-margin">
                     <Sidebar />
                 </div>
 
