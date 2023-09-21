@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const winston = require('winston');
 
 const connectDatabase = () => {
   mongoose
@@ -7,12 +8,10 @@ const connectDatabase = () => {
       useUnifiedTopology: true,
     })
     .then((con) => {
-      console.log(
-        `MongoDB Database connected with HOST: ${con.connection.host}`
-      );
+      winston.info(`MongoDB Database connected with HOST: ${con.connection.host}`);
     })
     .catch((err) => {
-      console.error(`Failed to connect to MongoDB: ${err.message}`);
+      winston.error(`Failed to connect to MongoDB: ${err.message}`);
       process.exit(1);
     });
 };
