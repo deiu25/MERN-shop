@@ -27,7 +27,7 @@ export const Search = () => {
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
                 />
-                <button id="search_btn" className="btn">
+                <button id="search_btn" className="btn --btn">
                     <i className="fas fa-search" aria-hidden="true"></i>
                 </button>
             </div>
