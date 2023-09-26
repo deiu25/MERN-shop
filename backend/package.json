@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
+    "backend": "nodemon server.js",
     "dev": "SET NODE_ENV=DEVELOPMENT & nodemon server.js",
     "prod": "SET NODE_ENV=PRODUCTION & nodemon server.js",
     "seeder": "node utils/seeder.js"
