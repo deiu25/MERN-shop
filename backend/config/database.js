@@ -1,19 +1,12 @@
 const mongoose = require("mongoose");
-const winston = require('winston');
 
 const connectDatabase = () => {
-  mongoose
-    .connect(process.env.DB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+  return mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(() => {
+      console.log(`Successfully connected to MongoDB`);
     })
-    .then((con) => {
-      winston.info(`MongoDB Database connected with HOST: ${con.connection.host}`);
-    })
-    .catch((err) => {
-      winston.error(`Failed to connect to MongoDB: ${err.message}`);
-      process.exit(1);
-    });
+    .catch((err) => console.log(err));
 };
 
 module.exports = connectDatabase;
