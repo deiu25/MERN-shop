@@ -6,13 +6,13 @@ import { Loader } from "../leyout/Loader";
 import { MetaData } from "../leyout/MetaData";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetails, newReview, clearErrors } from '../../actions/productActions'
-import { addItemToCart } from '../../actions/cartActions'
 import { NEW_REVIEW_RESET } from '../../constants/productConstants'
 import { useParams } from "react-router-dom";
 import ListReviews from '../review/ListReviews';
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import AddToCartButton from './AddToCartButton';
 
 export const ProductDetails = () => {
 
@@ -128,11 +128,6 @@ export const ProductDetails = () => {
     setModalShow(false);
   }
 
-const addToCart = () => {
-  dispatch(addItemToCart(id, quantity));
-  notifySuccess('Item Added to Cart');
-};
-
 const handleRating = (rate) => {
   setRating(rate);
 };
@@ -184,7 +179,7 @@ const handleRating = (rate) => {
                             <input type="number" className="form-control count d-inline" value={quantity} readOnly />
                             <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
                         </div>
-                        <Button type="Button" id="cart_btn" className="btn btn-primary d-inline ml-4" disabled={product.stock === 0} onClick={addToCart}>Add to Cart</Button>
+                        <AddToCartButton id={product._id} quantity={quantity} productStock={product.stock} />
 
                         <hr />
 
