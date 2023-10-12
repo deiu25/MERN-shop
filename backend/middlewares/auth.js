@@ -1,10 +1,10 @@
-const catchAsyncErrors = require("./catchAsyncErrors");
-const ErrorHandler = require("../utils/errorHandler");
-const jwt = require("jsonwebtoken");
-const User = require("../models/user");
+import catchAsyncErrors from "./catchAsyncErrors.js";
+import ErrorHandler from "../utils/errorHandler.js";
+import jwt from "jsonwebtoken";
+import User from "../models/user.js";
 
 //Check if user is authenticated or not
-exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
+export const isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
     const { token } = req.cookies;  
 
     if (!token) {
@@ -18,7 +18,7 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
 });
 
 //Handling user roles
-exports.authorizeRoles = (...roles) => {
+export const authorizeRoles = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) { //roles = ["admin", "user"]
             return next(
@@ -28,5 +28,3 @@ exports.authorizeRoles = (...roles) => {
         next();
     }
 }
-
-// Compare this snippet from backend\middlewares\auth.js:

@@ -1,42 +1,36 @@
-const express = require('express');
+// Importing dependencies
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
+import dotenv from 'dotenv';
+
+import errorMiddleware from './middlewares/errors.js';
+import products from './routes/product.js';
+import auth from './routes/auth.js';
+import order from './routes/order.js';
+import payment from './routes/payment.js';
+
+// Loading environment variables
+dotenv.config({ path: '.env' });
+
+// Initializing express app
 const app = express();
 
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-const fileUpload = require('express-fileupload');
-const dotenv = require('dotenv');
-
-const errorMiddleware = require('./middlewares/errors');
-
-//Setting up config file
-dotenv.config({ path: 'backend/config/config.env' })
-
+// Applying middlewares
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload());
 
-//Importing all routes
-const products = require('./routes/product');
-const auth = require('./routes/auth');
-const order = require('./routes/order');
-const payment = require('./routes/payment');
-
+// Setting up routes
 app.use('/api/v1', products);
 app.use('/api/v1', auth);
 app.use('/api/v1', order);
 app.use('/api/v1', payment);
 
-//Middleware to handle errors
+// Applying error middleware
 app.use(errorMiddleware);
 
-module.exports = app;
-
-//node backend/server.js
-//npm run dev
-//npm run prod
-
-//mongod
-//mongosh
-
-//npm run seeder (to seed the database)
+// Exporting the app
+export default app;

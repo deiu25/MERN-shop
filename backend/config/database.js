@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const connectDatabase = () => {
   mongoose
-    .connect(process.env.DB_LOCAL_URI, {
+    .connect(process.env.DB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
@@ -17,4 +17,4 @@ const connectDatabase = () => {
     });
 };
 
-module.exports = connectDatabase;
+export default connectDatabase;
