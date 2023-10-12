@@ -9,4 +9,4 @@ const connectDatabase = () => {
     .catch((err) => console.log(err));
 };
 
-export default connectDatabase;
+export default connectDatabase;s
