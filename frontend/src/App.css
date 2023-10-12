@@ -2,6 +2,7 @@
   --padding-small: 0.4rem;
   --padding-medium: 1rem;
   --padding-large: 1.8rem;
+  --font-size-extra-small: 0.7rem;
   --font-size-small: 0.9rem;
   --font-size-medium: 1rem;
   --font-size-large: 1.4rem;
@@ -21,6 +22,7 @@
   --color-nav: #ffffff;
   --color-orange: #febd69;
   --color-focus: #00008b;
+  --color-blue: #007bff;
   --color-yellow: #fdcc0d;
   --color-yellow-dark: #f8ce0b;
   --default-font: "Amazon Ember", Arial, sans-serif;
@@ -137,6 +139,12 @@ nav a.active {
   margin-right: var(--margin-small);
 }
 
+.product-image {
+  object-fit: contain;
+  height: 90px;
+  width: 150px;
+}
+
 #cart_count {
   background-color: #60a9f8;
   padding: 0.2rem 0.5rem;
@@ -153,11 +161,12 @@ nav a.active {
 }
 
 .card {
-  height: 100%;
+  height: 450px !important;
 }
 
 .card-title a {
   color: var(--color-darkgrey);
+  font-size: var(--font-size-extra-small);
   text-decoration: none;
 }
 
@@ -174,14 +183,10 @@ nav a.active {
   font-size: var(--font-size-large);
 }
 
-#view_btn {
-  background-color: var(--color-orange);
-  color: var(--color-white);
-}
-
 .card-img-top {
   width: 200px;
-  min-height: auto;
+  height: 200px;
+  object-fit: contain; 
 }
 
 .ratings {
@@ -231,12 +236,30 @@ footer {
   font-size: var(--font-size-large);
 }
 
-#cart_btn,
+.cart_btn {
+  background-image: linear-gradient(var(--color-blue), var(--color-focus));
+  color: var(--color-white);
+  border: none;
+}
+
 #review_btn {
   border-radius: 2rem;
-  background-color: var(--color-orange);
+  background-image: linear-gradient(var(--color-blue), var(--color-focus));
+  color: var(--color-white);
   border: none;
   padding: 0.5rem 2rem;
+}
+
+.price-and-cart-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.cart_btn:hover,
+#review_btn:hover {
+  background-image: linear-gradient(var(--color-focus), var(--color-blue));
 }
 
 #product_seller {
