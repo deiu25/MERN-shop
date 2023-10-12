@@ -1,9 +1,8 @@
-require("dotenv").config();
-
-const connectDatabase = require('./config/database');
-const app = require('./app');
-
-const cloudinary = require('cloudinary');
+// importăm modulele necesare
+import app from './app.js';
+import connectDatabase from './config/database.js';
+import dotenv from 'dotenv';
+import { v2 as cloudinary } from 'cloudinary';
 
 // Handle Uncaught exceptions
 process.on('uncaughtException', err => {
@@ -11,6 +10,8 @@ process.on('uncaughtException', err => {
     console.log('Shutting down the server due to Uncaught Exception');
     process.exit(1)
 })
+
+dotenv.config({ path: './.env' });
 
 // Connecting to database
 connectDatabase();
