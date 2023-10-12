@@ -6,15 +6,7 @@ const connectDatabase = () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then((con) => {
-      console.log(
-        `MongoDB Database connected with HOST: ${con.connection.host}`
-      );
-    })
-    .catch((err) => {
-      console.error(`Failed to connect to MongoDB: ${err.message}`);
-      process.exit(1);
-    });
+    .catch((err) => console.log(err));
 };
 
 export default connectDatabase;

@@ -38,7 +38,7 @@ export const Header = () => {
           <div className="navbar-brand">
             <Link to="/">
               {/* <img src="./images/logo.png" /> */}
-              <h1>Shop</h1>
+              <h1 className="logo">Shop</h1>
             </Link>
           </div>
         </div>
@@ -48,8 +48,8 @@ export const Header = () => {
         </div>
 
         <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-          <Link to="/cart" style={{ textDecoration: "none" }}>
-            <span id="cart" className="ml-3">
+          <Link to="/cart">
+            <span id="cart" className="ml-3 cart-name">
               Cart
             </span>
             <span className="ml-1" id="cart_count">
@@ -75,7 +75,7 @@ export const Header = () => {
                     className="rounded-circle"
                   />
                 </figure>
-                <span>{user && user.name}</span>
+                <span className="username-collor">{user && user.name}</span>
               </Dropdown.Toggle>
 
               <Dropdown.Menu>

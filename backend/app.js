@@ -14,7 +14,6 @@ import payment from './routes/payment.js';
 // Loading environment variables
 dotenv.config({ path: '.env' });
 
-// Initializing express app
 const app = express();
 
 // Applying middlewares
