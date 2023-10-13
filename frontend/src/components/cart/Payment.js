@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
 
 import React, { useEffect } from 'react'
-import { createOrder, clearErrors } from '../../actions/orderActions'
+import { createOrder, clearErrors, clearCart } from '../../actions/orderActions'
 import  { useStripe, useElements, CardNumberElement, CardExpiryElement, CardCvcElement } from '@stripe/react-stripe-js'
 import axios from 'axios'
 
@@ -42,6 +42,8 @@ export const Payment = () => {
         orderItems: cartItems,
         shippingInfo
     }
+
+    console.log(order);
 
     const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
     if (orderInfo) {
@@ -103,6 +105,9 @@ export const Payment = () => {
 
                     dispatch(createOrder(order));
 
+                    // Clear the cart after order has been created
+                    dispatch(clearCart());
+
                     navigate('/success');
                 } else {
                     toast.error('There is some issue while payment processing');
@@ -160,7 +165,7 @@ export const Payment = () => {
                         <button
                             id="pay_btn"
                             type="submit"
-                            className="btn btn-block py-3"
+                            className="cart_btn btn btn-block py-3"
                         >
 
                             Pay {` - ${orderInfo && orderInfo.totalPrice}`}

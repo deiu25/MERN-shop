@@ -161,6 +161,15 @@ export const deleteOrder = (id) => async (dispatch) => {
     }
 }
 
+//delete item from cart after payment
+export const clearCart = () => async (dispatch) => {
+    dispatch({
+      type: 'CLEAR_CART'
+    });
+  
+    localStorage.removeItem('cartItems');
+  };
+
 // Clear Errors
 export const clearErrors = () => async (dispatch) => {
     dispatch({

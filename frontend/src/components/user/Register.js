@@ -48,6 +48,11 @@ export const Register = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    if (!avatar) {
+      toast.error('Avatar image is required');
+      return;
+    }
+
     const formData = new FormData();
     formData.set("name", name);
     formData.set("email", email);
@@ -142,6 +147,7 @@ export const Register = () => {
                     id="customFile"
                     accept="images/*"
                     onChange={onChange}
+                    required
                   />
                   <label className="custom-file-label" htmlFor="customFile">
                     Choose Avatar

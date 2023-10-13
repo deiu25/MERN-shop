@@ -14,7 +14,7 @@ export const Shipping = () => {
 
     const [address, setAddress] = useState(shippingInfo?.address || '');
     const [city, setCity] = useState(shippingInfo?.city || '');
-    const [phone, setPhone] = useState(shippingInfo?.phone || '');
+    const [phoneNo, setPhone] = useState(shippingInfo?.phoneNo || '');
     const [postalCode, setPostalCode] = useState(shippingInfo?.postalCode || '');
     const [country, setCountry] = useState(shippingInfo?.country || '');
     
@@ -24,8 +24,10 @@ export const Shipping = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
-        dispatch(saveShippingInfo({ address, city, phone, postalCode, country }));
+    
+        console.log({ address, city, phoneNo, postalCode, country });
+    
+        dispatch(saveShippingInfo({ address, city, phoneNo, postalCode, country }));
         navigate('/order/confirm');
     }
 
@@ -58,7 +60,7 @@ export const Shipping = () => {
                                 type="phone"
                                 id="phone_field"
                                 className="form-control"
-                                value={phone}
+                                value={phoneNo}
                                 onChange={(e) => setPhone(e.target.value)}
                                 required
                             />
@@ -103,7 +105,7 @@ export const Shipping = () => {
                             </select>
                         </div>
 
-                        <button type="submit" className="btn btn-primary btn-block">Continue</button>
+                        <button type="submit" className="cart_btn btn btn-primary btn-block">Continue</button>
                         
                     </form>
                 </div>

@@ -1,5 +1,8 @@
 import catchAsyncErrors from '../middlewares/catchAsyncErrors.js';
 import Stripe from 'stripe';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -8,7 +11,7 @@ export const processPayment = catchAsyncErrors(async (req, res, next) => {
     
         const paymentIntent = await stripe.paymentIntents.create({
             amount: req.body.amount,
-            currency: 'ron',
+            currency: 'usd',
     
             metadata: { integration_check: 'accept_a_payment' }
         });

@@ -26,7 +26,9 @@ export const ConfirmOrder = () => {
             taxPrice,
             totalPrice
         }
-
+    
+        console.log(data);
+    
         sessionStorage.setItem('orderInfo', JSON.stringify(data));
         navigate('/payment');
     }
@@ -34,7 +36,7 @@ export const ConfirmOrder = () => {
     const confirm = {
         address: shippingInfo.address,
         city: shippingInfo.city,
-        phone: shippingInfo.phone,
+        phoneNo: shippingInfo.phoneNo,
         postalCode: shippingInfo.postalCode,
         country: shippingInfo.country,
     }
@@ -55,7 +57,7 @@ export const ConfirmOrder = () => {
 
                     <h4 className="mb-3">Shipping Info</h4>
                     <p><b>Name:</b> {user && user.name}</p>
-                    <p><b>Phone:</b> {confirm.phone}</p>
+                    <p><b>Phone:</b> {confirm.phoneNo}</p>
                     <p className="mb-4"><b>Address:</b> {confirm.address}, {confirm.city}, {confirm.postalCode}, {confirm.country}</p>
 
                     <hr />
@@ -65,7 +67,7 @@ export const ConfirmOrder = () => {
                         <div key={item.product} className="cart-item my-1">
                             <div className="row my-5">
                                 <div className="col-4 col-lg-2">
-                                    <img src={item.image} alt={item.name} height="90" width="115" />
+                                    <img src={item.image} alt={item.name} className='product-image' />
                                 </div>
 
                                 <div className="col-5 col-lg-5">
@@ -99,7 +101,7 @@ export const ConfirmOrder = () => {
                         <p>Total: <span className="order-summary-values">${totalPrice}</span></p>
 
                         <hr />
-                        <button id="checkout_btn" className="btn btn-primary btn-block" onClick={checkoutHandler}>Proceed to Payment</button>
+                        <button id="checkout_btn" className="cart_btn btn btn-primary btn-block" onClick={checkoutHandler}>Proceed to Payment</button>
                     </div>
                 </div>
             </div>

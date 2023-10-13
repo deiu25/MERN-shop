@@ -25,6 +25,8 @@ import {
     ORDER_DETAILS_SUCCESS,
     ORDER_DETAILS_FAIL,
 
+    CLEAR_CART,
+
     CLEAR_ERRORS
 } from "../constants/orderConstants";
 
@@ -203,6 +205,12 @@ export const orderDetailsReducer = (state = { order: {} }, action) => {
                         ...state,
                         error: action.payload
                     }
+
+                    case CLEAR_CART:
+                        return {
+                          ...state,
+                          cartItems: []
+                        };
         
                 case CLEAR_ERRORS:
                     return {

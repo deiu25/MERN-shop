@@ -12,7 +12,7 @@ import order from './routes/order.js';
 import payment from './routes/payment.js';
 
 // Loading environment variables
-dotenv.config({ path: '.env' });
+dotenv.config();
 
 // Initializing express app
 const app = express();
